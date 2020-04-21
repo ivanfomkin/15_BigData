@@ -37,6 +37,8 @@ public class Main {
         hadoop.delete("myfile");
         hadoop.delete("test");
         hadoop.delete("test.txt");
+
+        hadoop.close();
     }
 
     private static String getRandomWord() {
