@@ -42,7 +42,12 @@ public class FileAccess {
         if (hdfs.exists(filePath)) {
             System.out.println("Path " + filePath + " already exists!");
         } else {
-            hdfs.createNewFile(filePath);
+            if (!path.contains(".")) { //Если в имени есть точка - будем считать что это файл.
+                hdfs.mkdirs(filePath);
+//                hdfs.create(filePath);
+            } else {
+                hdfs.createNewFile(filePath);
+            }
         }
     }
 
@@ -133,10 +138,9 @@ public class FileAccess {
         if (hdfs.exists(filesPath)) {
             FileStatus[] fileStatuses = hdfs.listStatus(filesPath);
             for (FileStatus fileStatus : fileStatuses) {
+                files.add(fileStatus.getPath().toString());
                 if (fileStatus.isDirectory()) {
                     files.addAll(list(fileStatus.getPath().toString()));
-                } else {
-                    files.add(fileStatus.getPath().toString());
                 }
             }
         } else {
