@@ -44,7 +44,6 @@ public class FileAccess {
         } else {
             if (!path.contains(".")) { //Если в имени есть точка - будем считать что это файл.
                 hdfs.mkdirs(filePath);
-//                hdfs.create(filePath);
             } else {
                 hdfs.createNewFile(filePath);
             }
@@ -81,7 +80,7 @@ public class FileAccess {
      * @return
      */
     public String read(String path) throws IOException {
-        var result = new StringBuilder();
+        StringBuilder result = new StringBuilder();
         Path filePath = new Path(rootPath + "/" + path);
         if (hdfs.isFile(filePath) && hdfs.exists(filePath)) {
             FSDataInputStream open = hdfs.open(filePath);
